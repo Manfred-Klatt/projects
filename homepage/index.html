@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manfred Klatt</title>
+    <link rel="icon" type="image/png" href="images/favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
+            <div class="profile-pic">
+                <div class="profile-bg"></div>
+                <img 
+                    src="images/me.png" 
+                    alt="Manfred Klatt" 
+                    class="profile-img"
+                    loading="eager"
+                >
+            </div>
+            <h1>Manfred Klatt</h1>
+            <p class="tagline">Software Developer | Tech Enthusiast</p>
+        </header>
+
+        <section class="intro">
+            <p>I am a passionate software developer with a love for creating elegant solutions to complex problems. When I'm not coding, you can find me exploring new technologies or working on personal projects.</p>
+            <div class="tech-stack">
+                <span class="tech-tag frontend">JavaScript</span>
+                <span class="tech-tag frontend">HTML5</span>
+                <span class="tech-tag frontend">CSS3</span>
+                <span class="tech-tag frontend">Sass/SCSS</span>
+                <span class="tech-tag frontend">React</span>
+                
+                <span class="tech-tag backend">Node.js</span>
+                <span class="tech-tag backend">Python</span>
+                <span class="tech-tag backend">C++</span>
+                <span class="tech-tag backend">RESTful APIs</span>
+                
+                <span class="tech-tag databases">MongoDB</span>
+                <span class="tech-tag databases">SQL/NoSQL</span>
+                <span class="tech-tag devops">Docker</span>
+                <span class="tech-tag devops">GCP</span>
+                
+                <span class="tech-tag tools">XML</span>
+                <span class="tech-tag tools">Vite</span>
+            </div>
+        </section>
+
+        <main>
+            <section class="links">
+                <a href="https://www.linkedin.com/in/manfred-klatt-094a88161/" target="_blank" class="link-card">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn</span>
+                </a>
+                <a href="https://github.com/ManfredKlatt" target="_blank" class="link-card">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://blathers.app" target="_blank" class="link-card">
+                    <img src="images/Leaf.svg" alt="Blathers Icon" class="link-icon">
+                    <span>Blathers.app</span>
+                </a>
+                <a href="mailto:manfredjklatt@gmail.com" class="link-card">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Me</span>
+                </a>
+            </section>
+
+            <section class="job-references">
+                <h2>Work Experience</h2>
+                <div class="job-grid">
+                    <div class="job-card">
+                        <div class="job-header">
+                            <h3>Software Developer</h3>
+                            <span class="job-company">Blathers</span>
+                            <span class="job-duration">2021 - Present</span>
+                        </div>
+                        <p class="job-description">Developing and maintaining the Blathers application, focusing on creating an intuitive and efficient user experience for personal knowledge management.</p>
+                        <div class="job-skills">
+                            <span class="tech-tag frontend">React</span>
+                            <span class="tech-tag frontend">TypeScript</span>
+                            <span class="tech-tag frontend">CSS3</span>
+                            <span class="tech-tag tools">Vite</span>
+                        </div>
+                    </div>
+
+                    <div class="job-card">
+                        <div class="job-header">
+                            <h3>Software Engineer</h3>
+                            <span class="job-company">Freelance</span>
+                            <span class="job-duration">2019 - 2021</span>
+                        </div>
+                        <p class="job-description">Worked with various clients to develop custom web applications and solutions, focusing on clean code and user experience.</p>
+                        <div class="job-skills">
+                            <span class="tech-tag frontend">JavaScript</span>
+                            <span class="tech-tag backend">Node.js</span>
+                            <span class="tech-tag databases">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© <span id="current-year"></span> Manfred Jürgen Klatt III</span></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
