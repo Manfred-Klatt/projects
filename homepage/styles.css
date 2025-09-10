@@ -28,8 +28,11 @@
     --bg-color: #1a1a1a;  /* Darker background */
 }
 
-body {
+*, body, button, input, select, textarea, h1, h2, h3, h4, h5, h6, .tech-tag, .job-company, .job-duration, .job-description, .description-text {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
     line-height: 1.6;
     color: #1f2937;
     min-height: 100vh;
@@ -308,90 +311,87 @@ header h1 {
 
 /* Tech tag base styles */
 .tech-tag {
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
     font-size: 0.9rem;
     font-weight: 500;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     transition: all 0.2s ease;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 2px;
     backdrop-filter: blur(5px);
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
 }
 
-.tech-tag::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: currentColor;
-    opacity: 0.1;
-    z-index: -1;
-    transition: opacity 0.2s ease;
-}
-
-.tech-tag:hover::before {
-    opacity: 0.15;
-}
-
-/* Category-specific tag colors */
 .tech-tag.frontend { 
-    color: #3b82f6; 
-    border-color: rgba(59, 130, 246, 0.3); 
+    background-color: #e0f2f1;  /* Light teal */
+    color: #00695c;
+    border-left: 3px solid #4db6ac;
 }
 
 .tech-tag.backend { 
-    color: #10b981; 
-    border-color: rgba(16, 185, 129, 0.3); 
+    background-color: #e8f5e9;  /* Light green */
+    color: #2e7d32;
+    border-left: 3px solid #66bb6a;
 }
 
 .tech-tag.databases { 
-    color: #8b5cf6; 
-    border-color: rgba(139, 92, 246, 0.3); 
+    background-color: #e3f2fd;  /* Light blue */
+    color: #1565c0;
+    border-left: 3px solid #64b5f6;
 }
 
 .tech-tag.devops { 
-    color: #f59e0b; 
-    border-color: rgba(245, 158, 11, 0.3); 
+    background-color: #fff3e0;  /* Light orange */
+    color: #e65100;
+    border-left: 3px solid #ff9800;
 }
 
 .tech-tag.tools { 
-    color: #06b6d4; 
-    border-color: rgba(6, 182, 212, 0.3); 
+    background-color: #f3e5f5;  /* Light purple */
+    color: #7b1fa2;
+    border-left: 3px solid #ab47bc;
+}
+
+/* Hover effects */
+.tech-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    filter: brightness(0.95);
+    background: var(--primary-color);
+    color: white;
+    border-color: transparent;
 }
 
 /* Dark mode adjustments */
 [data-theme="dark"] .tech-tag {
-    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-[data-theme="dark"] .tech-tag.frontend { border-color: rgba(59, 130, 246, 0.5); }
-[data-theme="dark"] .tech-tag.backend { border-color: rgba(16, 185, 129, 0.5); }
-[data-theme="dark"] .tech-tag.databases { border-color: rgba(139, 92, 246, 0.5); }
-[data-theme="dark"] .tech-tag.devops { border-color: rgba(245, 158, 11, 0.5); }
-[data-theme="dark"] .tech-tag.tools { border-color: rgba(6, 182, 212, 0.5); }
-
-.tech-tag {
-    background: rgba(147, 197, 253, 0.1);
-    color: var(--text-color);
-    padding: 0.4rem 0.9rem;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border: 1px solid rgba(147, 197, 253, 0.15);
-    backdrop-filter: blur(5px);
+[data-theme="dark"] .tech-tag.frontend {
+    background-color: rgba(0, 150, 136, 0.2);
+    border-left: 3px solid #4db6ac;
 }
 
-.tech-tag:hover {
-    transform: translateY(-2px);
-    background: var(--primary-color);
-    color: white;
-    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
-    border-color: transparent;
+[data-theme="dark"] .tech-tag.backend {
+    background-color: rgba(67, 160, 71, 0.2);
+    border-left: 3px solid #66bb6a;
+}
+
+[data-theme="dark"] .tech-tag.databases {
+    background-color: rgba(30, 136, 229, 0.2);
+    border-left: 3px solid #64b5f6;
+}
+
+[data-theme="dark"] .tech-tag.tools {
+    background-color: rgba(142, 36, 170, 0.2);
+    border-left: 3px solid #ab47bc;
+}
+
+[data-theme="dark"] .tech-tag.devops {
+    background-color: rgba(245, 124, 0, 0.2);
+    border-left: 3px solid #ff9800;
 }
 
 [data-theme="dark"] .tech-tag:hover {
@@ -800,6 +800,363 @@ h1 {
 
 [data-theme="dark"] .job-card:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Blathers Card Styles */
+.blathers-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f5dc 0%, #e8f4f8 100%);
+    border: 2px solid #8bc34a;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.blathers-card .job-header h3 {
+    color: #4a6741;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.blathers-card .job-header h3 i {
+    color: #8bc34a;
+}
+
+.blathers-card .job-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 4px;
+}
+
+.blathers-card .job-company {
+    color: #1e88e5; /* Blue from Animal Crossing palette */
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.blathers-card .job-company:visited {
+    color: #8e24aa; /* Purple for visited links */
+}
+
+.blathers-card .job-company:hover {
+    text-decoration: underline;
+    color: #1565c0; /* Darker blue on hover */
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .blathers-card .job-company {
+    color: #64b5f6; /* Lighter blue for dark mode */
+}
+
+[data-theme="dark"] .blathers-card .job-company:visited {
+    color: #ba68c8; /* Lighter purple for dark mode */
+}
+
+[data-theme="dark"] .blathers-card .job-company:hover {
+    color: #42a5f5; /* Brighter blue on hover in dark mode */
+}
+
+.blathers-card .job-duration {
+    background: #8bc34a;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.85em;
+}
+
+.blathers-card .paw-decoration {
+    position: absolute;
+    top: 20px; /* Increased from 10px */
+    right: 10px;
+    opacity: 0.1;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+}
+
+.blathers-card .paw-decoration {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blathers-card .leaf-decoration {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    filter: drop-shadow(0 0 10px rgba(139, 195, 74, 0.8));
+}
+
+[data-theme="dark"] .blathers-card .leaf-decoration {
+    opacity: 0.7; /* Maintain 70% opacity in dark mode */
+}
+
+[data-theme="dark"] .blathers-card .paw-decoration {
+    opacity: 0.25;
+}
+
+[data-theme="dark"] .blathers-card .paw-decoration i {
+    text-shadow: 0 0 8px rgba(139, 195, 74, 0.4);
+}
+
+.blathers-card .job-description {
+    position: relative;
+    z-index: 2;
+    color: #4a4a4a;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+.blathers-card .description-text {
+    display: inline-block;
+    background: rgba(255,255,255,0.7);
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 3px solid #8bc34a;
+}
+
+.blathers-card .job-skills {
+    position: relative;
+    z-index: 2;
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Blathers card specific tech tags - now using the same as global */
+
+.blathers-card .tech-tag.databases {
+    background-color: #e3f2fd;  /* Light blue */
+    color: #1565c0;
+    border-left: 3px solid #64b5f6;
+}
+
+.blathers-card .tech-tag.tools {
+    background-color: #f3e5f5;  /* Light purple */
+    color: #7b1fa2;
+    border-left: 3px solid #ab47bc;
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .blathers-card {
+    background: linear-gradient(135deg, #2a2a1e 0%, #1e2a2f 100%);
+    border-color: #5a8f5a;
+}
+
+[data-theme="dark"] .blathers-card .job-header h3 {
+    color: #b8d8b8;
+}
+
+[data-theme="dark"] .blathers-card .job-header h3 i {
+    color: #5a8f5a;
+}
+
+[data-theme="dark"] .blathers-card .job-company {
+    color: #a0c0a0;
+}
+
+[data-theme="dark"] .blathers-card .job-duration {
+    background: #5a8f5a;
+    color: white;
+}
+
+[data-theme="dark"] .blathers-card .description-text {
+    background: rgba(0, 0, 0, 0.2);
+    color: #e0e0e0;
+    border-left-color: #5a8f5a;
+}
+
+[data-theme="dark"] .blathers-card .tech-tag {
+    background: rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+[data-theme="dark"] .blathers-card .tech-tag.frontend {
+    background-color: rgba(0, 150, 136, 0.2);
+    border-left: 3px solid #4db6ac;
+}
+
+[data-theme="dark"] .blathers-card .tech-tag.backend {
+    background-color: rgba(67, 160, 71, 0.2);
+    border-left: 3px solid #66bb6a;
+}
+
+[data-theme="dark"] .blathers-card .tech-tag.databases {
+    background-color: rgba(30, 136, 229, 0.2);
+    border-left: 3px solid #64b5f6;
+}
+
+[data-theme="dark"] .blathers-card .tech-tag.tools {
+    background-color: rgba(142, 36, 170, 0.2);
+    border-left: 3px solid #ab47bc;
+}
+
+/* USF Card Styles */
+.usf-card {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fffcf5 0%, #fff9e6 100%);
+    border: 2px solid #f2a900; /* USF Gold border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.usf-card .job-header h3 {
+    color: #006341; /* Darker USF Green */
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    text-transform: none; /* Removed uppercase */
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    font-size: 1.4rem; /* Matched Blathers card */
+}
+
+.usf-card .job-header h3 i {
+    color: #f2a900; /* USF Gold */
+    font-size: 1.2em;
+}
+
+.usf-card .job-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    gap: 4px;
+}
+
+.usf-card .job-company {
+    color: #006341; /* USF Green */
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1.1rem; /* Matched Blathers card */
+    display: inline-block;
+    padding: 0;
+    background: none;
+    border: none;
+    margin-bottom: 0.25rem;
+}
+
+.usf-card .job-company a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.usf-card .job-company a:hover {
+    color: #f2a900; /* USF Gold on hover */
+    text-decoration: underline;
+}
+
+[data-theme="dark"] .usf-card .job-company {
+    color: #f2a900; /* USF Gold in dark mode */
+    background: none;
+}
+
+.usf-card .job-duration {
+    background: #f2a900; /* USF Gold */
+    color: #006341; /* USF Green text for contrast */
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.9rem; /* Matched Blathers card */
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.usf-card .bull-decoration {
+    position: absolute;
+    top: 20px; /* Increased from 10px */
+    right: 10px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.usf-card .usf-bull {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.1; /* Reduced to 20% opacity */
+    filter: drop-shadow(0 0 8px rgba(0, 75, 135, 0.4));
+}
+
+[data-theme="dark"] .usf-card .usf-bull {
+    opacity: 0.2; /* Maintain 20% opacity in dark mode */
+}
+
+.usf-card .job-description {
+    position: relative;
+    z-index: 2;
+    color: #333;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+.usf-card .description-text {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid #f2a900; /* USF Gold */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Dark mode styles */
+[data-theme="dark"] .usf-card {
+    background: linear-gradient(135deg, #1a1f26 0%, #0d1218 100%);
+    border: 2px solid #f2a900; /* USF Gold border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .usf-card .job-header h3 {
+    color: #f2a900; /* USF Gold */
+}
+
+[data-theme="dark"] .usf-card .job-company {
+    color: #4d9de0; /* Lighter blue for better visibility */
+}
+
+[data-theme="dark"] .usf-card .job-company a {
+    color: inherit;
+}
+
+[data-theme="dark"] .usf-card .job-company a:hover {
+    color: #f2a900; /* USF Gold on hover */
+    text-decoration: underline;
+}
+
+[data-theme="dark"] .usf-card .job-duration {
+    background: #f2a900; /* USF Gold */
+    color: #7ab4e8;
+    box-shadow: 0 2px 8px rgba(242, 169, 0, 0.3);
+    font-weight: 600;
+}
+
+[data-theme="dark"] .usf-card .description-text {
+    background: rgba(0, 0, 0, 0.2);
+    color: #e0e0e0;
+    border-left-color: #f2a900; /* USF Gold */
+}
+
+[data-theme="dark"] .usf-card .bull-decoration i {
+    color: #f2a900; /* USF Gold */
+    text-shadow: 0 0 8px rgba(242, 169, 0, 0.3);
 }
 
 /* Responsive adjustments */
