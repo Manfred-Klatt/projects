@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const profileBg = document.querySelector('.profile-bg');
     const nameElement = document.querySelector('h1');
     
+    // Debug log to check if elements are found
+    console.log('Profile background element:', profileBg);
+    console.log('Name element:', nameElement);
+    
     const backgroundThemes = [
         {
             class: 'bg-circuit',
@@ -18,25 +22,65 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
             class: 'bg-grid',
-            gradient: 'linear-gradient(90deg, #6366f1, #8b5cf6, #6366f1)'
+            gradient: 'linear-gradient(90deg, #06b6d4, #3b82f6, #06b6d4)'
         },
         {
             class: 'bg-particles',
-            gradient: 'linear-gradient(90deg, #7c3aed, #3b82f6, #7c3aed)'
+            gradient: 'linear-gradient(90deg, #f59e0b, #ef4444, #f59e0b)'
         },
         {
             class: 'bg-waves',
-            gradient: 'linear-gradient(90deg, #38bdf8, #6366f1, #38bdf8)'
+            gradient: 'linear-gradient(90deg, #10b981, #3b82f6, #10b981)'
         },
         {
             class: 'bg-binary',
-            gradient: 'linear-gradient(90deg, #6366f1, #38bdf8, #6366f1)'
+            gradient: 'linear-gradient(90deg, #8b5cf6, #ec4899, #8b5cf6)'
+        },
+        {
+            class: 'bg-circuit',
+            gradient: 'linear-gradient(90deg, #f97316, #f59e0b, #f97316)' // Orange gradient
+        },
+        {
+            class: 'bg-grid',
+            gradient: 'linear-gradient(90deg, #14b8a6, #0ea5e9, #14b8a6)' // Teal to sky blue
+        },
+        {
+            class: 'bg-particles',
+            gradient: 'linear-gradient(90deg, #8b5cf6, #d946ef, #8b5cf6)' // Purple to fuchsia
+        },
+        {
+            class: 'bg-waves',
+            gradient: 'linear-gradient(90deg, #84cc16, #10b981, #84cc16)' // Lime to emerald
+        },
+        {
+            class: 'bg-binary',
+            gradient: 'linear-gradient(90deg, #ec4899, #f43f5e, #ec4899)' // Pink to rose
         }
     ];
     
     const selectedTheme = backgroundThemes[Math.floor(Math.random() * backgroundThemes.length)];
-    profileBg.classList.add(selectedTheme.class);
-    nameElement.style.backgroundImage = selectedTheme.gradient;
+    console.log('Selected theme:', selectedTheme);
+    
+    // Apply the background class and gradient with error handling
+    try {
+        if (profileBg) {
+            profileBg.classList.add(selectedTheme.class);
+            // Also set the background directly as a fallback
+            profileBg.style.background = selectedTheme.gradient;
+            console.log('Applied background class:', selectedTheme.class);
+        } else {
+            console.error('Profile background element not found');
+        }
+        
+        if (nameElement) {
+            nameElement.style.backgroundImage = selectedTheme.gradient;
+            console.log('Applied name gradient');
+        } else {
+            console.error('Name element not found');
+        }
+    } catch (error) {
+        console.error('Error applying background:', error);
+    }
 
     // Dark Mode Toggle
     const toggle = document.getElementById('theme-toggle');
