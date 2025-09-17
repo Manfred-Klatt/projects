@@ -12,11 +12,15 @@
 
 /* Modern CSS Reset */
 :root {
-    --primary-color: #2563eb;
-    --secondary-color: #1e40af;
+    --bg-color: transparent;
     --text-color: #1f2937;
-    --bg-color: #f9fafb;
+    --accent-color: #3b82f6;
+    --secondary-color: #8b5cf6;
+    --border-color: #e5e7eb;
     --card-bg: #ffffff;
+    --card-border: #e5e7eb;
+    --tag-bg: #f3f4f6;
+    --tag-text: #4b5563;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     --toggle-bg: #e5e7eb;
     --toggle-icon: #4b5563;
@@ -35,7 +39,15 @@
 
 /* Dark theme - Only page background changes */
 [data-theme="dark"] {
-    --bg-color: #1a1a1a;  /* Darker background */
+    --bg-color: transparent;  /* Transparent background */
+    --text-color: #f9fafb;
+    --accent-color: #60a5fa;
+    --secondary-color: #a78bfa;
+    --border-color: #374151;
+    --card-bg: #1f2937;
+    --card-border: #374151;
+    --tag-bg: #374151;
+    --tag-text: #d1d5db;
 }
 
 /* Base font for most elements */
@@ -113,54 +125,95 @@ img {
 
 body {
     line-height: 1.6;
-    color: #333;
-    background-color: var(--bg-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    overflow-x: hidden;
-    min-height: 100vh;
+    color: #1f2937;
     display: flex;
     flex-direction: column;
-}
-
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
+    background: transparent;
+    transition: color 0.3s ease;
+    min-height: 100vh;
     width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-    z-index: -1;
-    opacity: 1;
-    transition: opacity 0.3s ease;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-[data-theme="dark"] body::before {
-    opacity: 0;
+/* Animated background */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    z-index: -1;
-    animation: moveGrid 20s linear infinite;
-}
 
-@keyframes moveGrid {
+@keyframes gridMove {
     0% {
         background-position: 0 0;
     }
     100% {
         background-position: 50px 50px;
     }
+}
+
+/* Background animations */
+#bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 1;
+}
+
+#bg-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    z-index: -3;
+    opacity: 1;
+}
+
+
+#bg-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.07) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: -1;
+    animation: gridMove 20s linear infinite;
+}
+
+/* Dark mode background */
+[data-theme="dark"] #bg-gradient {
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%, #374151 200%, #1f2937 300%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    opacity: 1;
+}
+
+
+[data-theme="dark"] #bg-grid {
+    background-image: 
+        linear-gradient(rgba(139, 92, 246, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.1) 1px, transparent 1px);
 }
 
 .container {
@@ -170,9 +223,9 @@ body::after {
     width: 100%;
     box-sizing: border-box;
     overflow-x: hidden;
-    flex: 1;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Procedural Backgrounds */
@@ -514,6 +567,8 @@ header h1 {
     transition: all 0.3s ease;
     position: relative;
     z-index: 1;
+    display: flex;
+    align-items: flex-end;
 }
 
 /* Second profile-bg declaration removed */
@@ -555,9 +610,12 @@ header h1 {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 10%;
     border-radius: 50%;
     position: relative;
-    z-index: 2; /* Ensure it's above the background */
+    z-index: 2;
+    transform: translateY(2%);
+    margin-bottom: -2%;
 }
 
 .initials {
@@ -1609,28 +1667,26 @@ h1 {
 footer {
     text-align: center;
     margin-top: auto;
-    padding: 2rem 0 1rem;
+    padding: 2rem 1rem 1rem;
     color: #6b7280;
     font-size: 0.9rem;
     width: 100%;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
-/* Dark mode footer glow effect */
+/* Dark mode footer styles */
 [data-theme="dark"] footer {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
     color: #a0aec0;
-    position: relative;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
 }
 
 [data-theme="dark"] footer::after {
     content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    display: block;
     width: 80%;
     height: 1px;
+    margin: 0.5rem auto 0;
     background: linear-gradient(90deg, 
         transparent 0%, 
         rgba(255, 255, 255, 0.1) 30%, 
@@ -1648,6 +1704,15 @@ footer {
         max-width: 100%;
         box-sizing: border-box;
         overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    footer {
+        padding: 1.5rem 1rem;
+        text-align: center;
+        margin: 0 auto;
+        width: 100%;
     }
     
     body, html {
