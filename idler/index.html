@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker - Idle Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px;
+        }
+
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .stats {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .cookie-count {
+            font-size: 3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .per-second {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .cookie-button {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #ffd700, #ffed4e);
+            border: 8px solid #f4a460;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            font-size: 5em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .cookie-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .cookie-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .upgrades-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow-y: auto;
+            max-height: 500px;
+            padding-right: 10px;
+        }
+
+        .upgrades-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .upgrades-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .upgrades-container::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .upgrade-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .upgrade-item:hover:not(.disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-color: #667eea;
+        }
+
+        .upgrade-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .upgrade-info {
+            flex: 1;
+        }
+
+        .upgrade-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .upgrade-description {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .upgrade-owned {
+            font-size: 0.85em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .upgrade-cost {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #f4a460;
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+
+        .click-effect {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: float-up 1s ease-out forwards;
+            z-index: 1000;
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .cookie-button {
+                width: 200px;
+                height: 200px;
+                font-size: 4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="left-panel">
+            <h1>🍪 Cookie Clicker</h1>
+            <div class="stats">
+                <div class="cookie-count" id="cookieCount">0</div>
+                <div class="per-second">per second: <span id="perSecond">0</span></div>
+            </div>
+            <button class="cookie-button" id="cookieButton">🍪</button>
+        </div>
+
+        <div class="right-panel">
+            <h2>Upgrades</h2>
+            <div class="upgrades-container" id="upgradesContainer">
+                <!-- Upgrades will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game state
+        let cookies = 0;
+        let cookiesPerSecond = 0;
+        let clickPower = 1;
+
+        // Upgrade definitions
+        const upgrades = [
+            {
+                id: 'cursor',
+                name: '👆 Cursor',
+                description: 'Auto-clicks once per 10 seconds',
+                baseCost: 15,
+                cps: 0.1,
+                owned: 0
+            },
+            {
+                id: 'grandma',
+                name: '👵 Grandma',
+                description: 'Bakes cookies for you',
+                baseCost: 100,
+                cps: 1,
+                owned: 0
+            },
+            {
+                id: 'farm',
+                name: '🌾 Farm',
+                description: 'Grows cookie ingredients',
+                baseCost: 1100,
+                cps: 8,
+                owned: 0
+            },
+            {
+                id: 'mine',
+                name: '⛏️ Mine',
+                description: 'Mines chocolate chips',
+                baseCost: 12000,
+                cps: 47,
+                owned: 0
+            },
+            {
+                id: 'factory',
+                name: '🏭 Factory',
+                description: 'Mass produces cookies',
+                baseCost: 130000,
+                cps: 260,
+                owned: 0
+            },
+            {
+                id: 'bank',
+                name: '🏦 Bank',
+                description: 'Generates cookie interest',
+                baseCost: 1400000,
+                cps: 1400,
+                owned: 0
+            },
+            {
+                id: 'temple',
+                name: '🛕 Temple',
+                description: 'Summons cookie spirits',
+                baseCost: 20000000,
+                cps: 7800,
+                owned: 0
+            },
+            {
+                id: 'wizard',
+                name: '🧙 Wizard Tower',
+                description: 'Conjures cookies from thin air',
+                baseCost: 330000000,
+                cps: 44000,
+                owned: 0
+            }
+        ];
+
+        // DOM elements
+        const cookieButton = document.getElementById('cookieButton');
+        const cookieCountEl = document.getElementById('cookieCount');
+        const perSecondEl = document.getElementById('perSecond');
+        const upgradesContainer = document.getElementById('upgradesContainer');
+
+        // Calculate upgrade cost with scaling
+        function getUpgradeCost(upgrade) {
+            return Math.floor(upgrade.baseCost * Math.pow(1.15, upgrade.owned));
+        }
+
+        // Format numbers
+        function formatNumber(num) {
+            if (num >= 1000000000) return (num / 1000000000).toFixed(2) + 'B';
+            if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(2) + 'K';
+            return Math.floor(num).toString();
+        }
+
+        // Update display
+        function updateDisplay() {
+            cookieCountEl.textContent = formatNumber(cookies);
+            perSecondEl.textContent = formatNumber(cookiesPerSecond);
+            updateUpgradeButtons();
+        }
+
+        // Create upgrade buttons
+        function createUpgradeButtons() {
+            upgradesContainer.innerHTML = '';
+            upgrades.forEach(upgrade => {
+                const upgradeDiv = document.createElement('div');
+                upgradeDiv.className = 'upgrade-item';
+                upgradeDiv.id = `upgrade-${upgrade.id}`;
+                
+                const cost = getUpgradeCost(upgrade);
+                
+                upgradeDiv.innerHTML = `
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">${upgrade.name}</div>
+                        <div class="upgrade-description">${upgrade.description}</div>
+                        <div class="upgrade-owned">Owned: <span id="owned-${upgrade.id}">0</span> | +${formatNumber(upgrade.cps)}/s each</div>
+                    </div>
+                    <div class="upgrade-cost" id="cost-${upgrade.id}">${formatNumber(cost)}</div>
+                `;
+                
+                upgradeDiv.addEventListener('click', () => buyUpgrade(upgrade));
+                upgradesContainer.appendChild(upgradeDiv);
+            });
+        }
+
+        // Update upgrade button states
+        function updateUpgradeButtons() {
+            upgrades.forEach(upgrade => {
+                const cost = getUpgradeCost(upgrade);
+                const upgradeDiv = document.getElementById(`upgrade-${upgrade.id}`);
+                const costEl = document.getElementById(`cost-${upgrade.id}`);
+                const ownedEl = document.getElementById(`owned-${upgrade.id}`);
+                
+                if (upgradeDiv) {
+                    if (cookies >= cost) {
+                        upgradeDiv.classList.remove('disabled');
+                    } else {
+                        upgradeDiv.classList.add('disabled');
+                    }
+                }
+                
+                if (costEl) costEl.textContent = formatNumber(cost);
+                if (ownedEl) ownedEl.textContent = upgrade.owned;
+            });
+        }
+
+        // Buy upgrade
+        function buyUpgrade(upgrade) {
+            const cost = getUpgradeCost(upgrade);
+            if (cookies >= cost) {
+                cookies -= cost;
+                upgrade.owned++;
+                calculateCPS();
+                updateDisplay();
+            }
+        }
+
+        // Calculate cookies per second
+        function calculateCPS() {
+            cookiesPerSecond = 0;
+            upgrades.forEach(upgrade => {
+                cookiesPerSecond += upgrade.cps * upgrade.owned;
+            });
+        }
+
+        // Cookie click handler
+        cookieButton.addEventListener('click', (e) => {
+            cookies += clickPower;
+            updateDisplay();
+            
+            // Create floating text effect
+            const effect = document.createElement('div');
+            effect.className = 'click-effect';
+            effect.textContent = `+${clickPower}`;
+            effect.style.left = e.clientX + 'px';
+            effect.style.top = e.clientY + 'px';
+            document.body.appendChild(effect);
+            
+            setTimeout(() => effect.remove(), 1000);
+        });
+
+        // Game loop - runs every 100ms
+        setInterval(() => {
+            cookies += cookiesPerSecond / 10;
+            updateDisplay();
+        }, 100);
+
+        // Save game every 5 seconds
+        setInterval(() => {
+            const gameState = {
+                cookies,
+                upgrades: upgrades.map(u => ({ id: u.id, owned: u.owned }))
+            };
+            localStorage.setItem('cookieClickerSave', JSON.stringify(gameState));
+        }, 5000);
+
+        // Load game
+        function loadGame() {
+            const saved = localStorage.getItem('cookieClickerSave');
+            if (saved) {
+                const gameState = JSON.parse(saved);
+                cookies = gameState.cookies || 0;
+                if (gameState.upgrades) {
+                    gameState.upgrades.forEach(savedUpgrade => {
+                        const upgrade = upgrades.find(u => u.id === savedUpgrade.id);
+                        if (upgrade) {
+                            upgrade.owned = savedUpgrade.owned;
+                        }
+                    });
+                }
+                calculateCPS();
+            }
+        }
+
+        // Initialize game
+        loadGame();
+        createUpgradeButtons();
+        updateDisplay();
+    </script>
+</body>
+</html>
