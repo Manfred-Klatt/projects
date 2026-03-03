@@ -417,7 +417,7 @@ header h1 {
 .terminal-btn {
     position: fixed;
     top: 20px;
-    left: 140px;
+    left: 20px;
     background: linear-gradient(135deg, #10b981, #059669);
     border: none;
     border-radius: 25px;
