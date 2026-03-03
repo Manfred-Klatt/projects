@@ -21,6 +21,14 @@
                 <i class="fas fa-moon"></i>
                 <i class="fas fa-sun"></i>
             </button>
+            <button id="resume-btn" class="resume-btn" aria-label="View Résumé">
+                <i class="fas fa-file-alt"></i>
+                <span>Résumé</span>
+            </button>
+            <button id="terminal-btn" class="terminal-btn" aria-label="Open Terminal">
+                <i class="fas fa-terminal"></i>
+                <span>Terminal</span>
+            </button>
             <div class="profile-pic">
                 <div class="profile-bg"></div>
                 <img 
@@ -43,6 +51,7 @@
                 <span class="tech-tag frontend">Sass/SCSS</span>
                 <span class="tech-tag frontend">React</span>
                 
+                <span class="tech-tag backend">Claude</span>
                 <span class="tech-tag backend">Node.js</span>
                 <span class="tech-tag backend">Python</span>
                 <span class="tech-tag backend">C++</span>
@@ -192,6 +201,87 @@
         <footer>
             <p>© <span id="current-year"></span> Manfred Jürgen Klatt III</span></p>
         </footer>
+    </div>
+
+    <!-- Resume Modal -->
+    <div id="resume-modal" class="resume-modal">
+        <div class="resume-modal-overlay"></div>
+        <div class="resume-modal-content">
+            <button class="resume-close-btn" aria-label="Close resume">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="resume-header">
+                <h2>Résumé</h2>
+                <div class="resume-download-btns">
+                    <a href="ManfredKlatt.pdf" download="ManfredKlatt.pdf" class="download-btn pdf-btn">
+                        <i class="fas fa-file-pdf"></i>
+                        <span>Download PDF</span>
+                    </a>
+                    <a href="ManfredKlatt.docx" download="ManfredKlatt.docx" class="download-btn docx-btn">
+                        <i class="fas fa-file-word"></i>
+                        <span>Download DOCX</span>
+                    </a>
+                </div>
+            </div>
+            <div class="resume-viewer">
+                <object id="resume-object" data="" type="application/pdf" width="100%" height="100%">
+                    <div class="pdf-fallback">
+                        <i class="fas fa-file-pdf"></i>
+                        <p>Unable to display PDF in browser.</p>
+                        <a href="ManfredKlatt.pdf" download="ManfredKlatt.pdf" class="fallback-download-btn">
+                            <i class="fas fa-download"></i>
+                            Download Résumé (PDF)
+                        </a>
+                        <a href="ManfredKlatt.docx" download="ManfredKlatt.docx" class="fallback-download-btn">
+                            <i class="fas fa-download"></i>
+                            Download Résumé (DOCX)
+                        </a>
+                    </div>
+                </object>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terminal Modal -->
+    <div id="terminal-modal" class="terminal-modal">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-title" id="terminal-title">Windows PowerShell</div>
+                <div class="terminal-theme-selector">
+                    <label for="terminal-theme">Theme:</label>
+                    <select id="terminal-theme" class="terminal-theme-dropdown">
+                        <option value="cmd">cmd</option>
+                        <option value="dracula">dracula</option>
+                        <option value="hacker">hacker</option>
+                        <option value="powershell">ps</option>
+                        <option value="solarized">solarized</option>
+                        <option value="ubuntu">ubuntu</option>
+                    </select>
+                </div>
+                <div class="terminal-controls">
+                    <button class="terminal-close-button" id="terminal-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="terminal-output" id="terminal-output">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">Welcome to Manfred's Portfolio Terminal!</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-text">Type <span class="terminal-command-hint">help</span> to see available commands.</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-text">─────────────────────────────────────────</span>
+                    </div>
+                </div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt-symbol">$</span>
+                    <input type="text" id="terminal-input" class="terminal-input" autocomplete="off" spellcheck="false" autofocus>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
