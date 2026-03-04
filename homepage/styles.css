@@ -416,8 +416,8 @@ header h1 {
 /* Terminal Button */
 .terminal-btn {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
     background: linear-gradient(135deg, #10b981, #059669);
     border: none;
     border-radius: 25px;
@@ -428,8 +428,8 @@ header h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 1000;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
     color: white;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
     font-weight: 500;
     font-size: 0.9rem;
 }
@@ -449,13 +449,16 @@ header h1 {
 }
 
 [data-theme="dark"] .terminal-btn {
-    background: linear-gradient(135deg, #34d399, #10b981);
-    box-shadow: 0 4px 15px rgba(52, 211, 153, 0.3);
+    background: linear-gradient(135deg, #1f2937, #111827);
+    color: #10b981;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 [data-theme="dark"] .terminal-btn:hover {
-    background: linear-gradient(135deg, #10b981, #059669);
-    box-shadow: 0 6px 20px rgba(52, 211, 153, 0.5);
+    background: linear-gradient(135deg, #111827, #000000);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    border-color: rgba(16, 185, 129, 0.5);
 }
 
 .theme-toggle .fa-sun {
@@ -1751,6 +1754,117 @@ h1 {
         max-height: 50px !important;
         overflow: hidden;
     }
+}
+
+/* Skeleton Screen Styles */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+[data-theme="dark"] .skeleton {
+    background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
+    background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.skeleton-profile {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+}
+
+.skeleton-title {
+    width: 250px;
+    height: 36px;
+    margin: 0 auto 0.5rem;
+}
+
+.skeleton-tagline {
+    width: 200px;
+    height: 20px;
+    margin: 0 auto 2rem;
+}
+
+.skeleton-text {
+    width: 100%;
+    height: 16px;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-text.short {
+    width: 60%;
+}
+
+.skeleton-tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+}
+
+.skeleton-tag {
+    width: 80px;
+    height: 32px;
+    border-radius: 12px;
+}
+
+.skeleton-link-card {
+    aspect-ratio: 1/1;
+    width: 100%;
+    max-width: 100px;
+    border-radius: 10px;
+}
+
+.skeleton-job-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .skeleton-job-card {
+    background: #1f2937;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.skeleton-job-title {
+    width: 200px;
+    height: 24px;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-job-company {
+    width: 150px;
+    height: 18px;
+    margin-bottom: 1rem;
+}
+
+.skeleton-job-description {
+    width: 100%;
+    height: 14px;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-job-description:last-of-type {
+    width: 80%;
+}
+
+.skeleton-hidden {
+    display: none;
 }
 
 /* Footer Styles */

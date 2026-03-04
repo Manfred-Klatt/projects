@@ -16,6 +16,58 @@
     </div>
     
     <div class="container">
+        <!-- Skeleton Loading Screen -->
+        <div id="skeleton-loader" class="skeleton-loader">
+            <header>
+                <div class="skeleton skeleton-profile"></div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-tagline"></div>
+            </header>
+
+            <section class="intro">
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text short"></div>
+                <div class="skeleton-tech-tags">
+                    <div class="skeleton skeleton-tag"></div>
+                    <div class="skeleton skeleton-tag"></div>
+                    <div class="skeleton skeleton-tag"></div>
+                    <div class="skeleton skeleton-tag"></div>
+                    <div class="skeleton skeleton-tag"></div>
+                    <div class="skeleton skeleton-tag"></div>
+                    <div class="skeleton skeleton-tag"></div>
+                    <div class="skeleton skeleton-tag"></div>
+                </div>
+            </section>
+
+            <section class="links" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 800px; margin: 1.5rem auto; padding: 0 1.5rem;">
+                <div class="skeleton skeleton-link-card" style="margin: 0 auto;"></div>
+                <div class="skeleton skeleton-link-card" style="margin: 0 auto;"></div>
+                <div class="skeleton skeleton-link-card" style="margin: 0 auto;"></div>
+                <div class="skeleton skeleton-link-card" style="margin: 0 auto;"></div>
+            </section>
+
+            <section class="job-references" style="max-width: 800px; margin: 3rem auto; padding: 0 1.5rem;">
+                <div class="skeleton skeleton-title" style="margin-bottom: 2rem;"></div>
+                <div class="skeleton-job-card">
+                    <div class="skeleton skeleton-job-title"></div>
+                    <div class="skeleton skeleton-job-company"></div>
+                    <div class="skeleton skeleton-job-description"></div>
+                    <div class="skeleton skeleton-job-description"></div>
+                    <div class="skeleton skeleton-job-description"></div>
+                </div>
+                <div class="skeleton-job-card">
+                    <div class="skeleton skeleton-job-title"></div>
+                    <div class="skeleton skeleton-job-company"></div>
+                    <div class="skeleton skeleton-job-description"></div>
+                    <div class="skeleton skeleton-job-description"></div>
+                    <div class="skeleton skeleton-job-description"></div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Actual Content -->
+        <div id="actual-content" class="skeleton-hidden">
         <header>
             <button id="terminal-btn" class="terminal-btn" aria-label="Open Terminal">
                 <i class="fas fa-terminal"></i>
@@ -197,6 +249,8 @@
         <footer>
             <p>© <span id="current-year"></span> Manfred Jürgen Klatt III</span></p>
         </footer>
+        </div>
+        <!-- End Actual Content -->
     </div>
 
     <!-- Terminal Modal -->
@@ -242,6 +296,31 @@
     </div>
 
     <script>
+// Skeleton Screen Loading
+(function() {
+    const skeletonLoader = document.getElementById('skeleton-loader');
+    const actualContent = document.getElementById('actual-content');
+    const minLoadTime = 800; // Minimum time to show skeleton (ms)
+    const startTime = Date.now();
+
+    function hideSkeletonShowContent() {
+        const elapsedTime = Date.now() - startTime;
+        const remainingTime = Math.max(0, minLoadTime - elapsedTime);
+
+        setTimeout(() => {
+            skeletonLoader.classList.add('skeleton-hidden');
+            actualContent.classList.remove('skeleton-hidden');
+        }, remainingTime);
+    }
+
+    // Hide skeleton when page is fully loaded
+    if (document.readyState === 'complete') {
+        hideSkeletonShowContent();
+    } else {
+        window.addEventListener('load', hideSkeletonShowContent);
+    }
+})();
+
 // Update the current year in the footer
 document.addEventListener('DOMContentLoaded', function() {
     // Detect if device is mobile (screen width < 768px)
@@ -257,10 +336,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set random procedural background for profile picture and matching name gradient
     const profileBg = document.querySelector('.profile-bg');
     const nameElement = document.querySelector('h1');
-    
-    // Debug log to check if elements are found
-    console.log('Profile background element:', profileBg);
-    console.log('Name element:', nameElement);
     
     const backgroundThemes = [
         {
@@ -306,24 +381,16 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     
     const selectedTheme = backgroundThemes[Math.floor(Math.random() * backgroundThemes.length)];
-    console.log('Selected theme:', selectedTheme);
     
     // Apply the background class and gradient with error handling
     try {
         if (profileBg) {
             profileBg.classList.add(selectedTheme.class);
-            // Also set the background directly as a fallback
             profileBg.style.background = selectedTheme.gradient;
-            console.log('Applied background class:', selectedTheme.class);
-        } else {
-            console.error('Profile background element not found');
         }
         
         if (nameElement) {
             nameElement.style.backgroundImage = selectedTheme.gradient;
-            console.log('Applied name gradient');
-        } else {
-            console.error('Name element not found');
         }
     } catch (error) {
         console.error('Error applying background:', error);
